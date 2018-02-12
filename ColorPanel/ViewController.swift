@@ -7,19 +7,42 @@
 //
 
 import UIKit
+import WebKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController,WKNavigationDelegate {
+    
+    @IBOutlet weak var webView: WKWebView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        // 表示するWEBサイトのURLを設定します。
+        let url = URL(string: "https://www.google.com")
+        let urlRequest = URLRequest(url: url!)
+        
+        // webViewで表示するWEBサイトの読み込みを開始します。
+        webView.load(urlRequest)
+        
     }
-
+    
+    // WEBサイトの読み込みを開始する時に呼ばれる
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        
+        // インジケータの表示を開始する
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    }
+    
+    // WEBサイトの読み込みを完了した時に呼ばれる
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        // インジケータの表示を終了する
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    
 }
 
